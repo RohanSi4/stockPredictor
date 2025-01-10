@@ -1,3 +1,4 @@
 .env
 .venv
 stock_data
+setup_instructions.sh

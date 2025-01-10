@@ -1,0 +1,7 @@
+pandas
+numpy
+scikit-learn
+xgboost
+tensorflow-macos  # For Apple Silicon; replace with tensorflow for Intel-based Macs
+alpha-vantage
+python-dotenv

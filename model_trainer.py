@@ -1,5 +1,3 @@
-import os
-from dotenv import load_dotenv
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -13,36 +11,11 @@ from sklearn.metrics import roc_auc_score, classification_report
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM, Dropout
 from tensorflow.keras.preprocessing.sequence import TimeseriesGenerator
-from alpha_vantage.timeseries import TimeSeries
+import os
 
-# Load environment variables
-load_dotenv()
-API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY")
-
-# Alpha Vantage API setup
-output_folder = "stock_data"
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
-file_path = os.path.join(output_folder, "SPY_all_data.csv")
-
-# Fetch all available daily data
-print("Fetching full historical data for SPY...")
-ts = TimeSeries(key=API_KEY, output_format='pandas')
-data, meta_data = ts.get_daily(symbol='SPY', outputsize='full')
-data.to_csv(file_path, index=True)
-print(f"Data saved to {file_path}")
-
-# Load data for processing
-data = pd.read_csv(file_path, parse_dates=['date'], index_col='date')
-data.sort_index(inplace=True)
-
-# Feature engineering
-data['daily_change'] = (data['4. close'] - data['1. open']) / data['1. open']
-data['target'] = (data['4. close'] > data['1. open']).astype(int)  # 1 if Close > Open, else 0
-
-# Drop unnecessary columns
-data.drop(columns=['5. volume'], inplace=True)
-data.dropna(inplace=True)
+# Load processed data
+processed_file_path = "stock_data/SPY_processed_data.csv"
+data = pd.read_csv(processed_file_path, parse_dates=['date'], index_col='date')
 
 # Chronological train-test split (80% train, 20% test)
 train_size = int(len(data) * 0.8)
