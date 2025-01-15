@@ -15,7 +15,7 @@ processed_file_path = "stock_data/SPY_processed_data.csv"
 data = pd.read_csv(processed_file_path, parse_dates=['date'], index_col='date')
 
 # Features and target
-X = data[['1. open', '2. high', '3. low', '4. close', 'log_return', 'RSI', 'SMA_20', 'EMA_20', 'trend', 'BB_Lower', 'BB_Mid', 'BB_Upper', 'ATR']]
+X = data[['1. open', '2. high', '3. low', '4. close', 'log_return', 'RSI', 'SMA_20', 'EMA_20', 'trend', 'BB_Lower', 'BB_Mid', 'BB_Upper', 'ATR', 'avg_sentiment', 'sentiment_std', 'news_count']]
 y = data['target']
 
 # Chronological train-test split

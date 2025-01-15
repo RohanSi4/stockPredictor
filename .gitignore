@@ -1,4 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
 .env
 .venv
-stock_data
-setup_instructions.sh
+venv/
+ENV/
+
+# Node/React
+node_modules/
+/stock-predictor-frontend/node_modules
+/stock-predictor-frontend/.pnp
+/stock-predictor-frontend/.pnp.js
+/stock-predictor-frontend/coverage
+/stock-predictor-frontend/build
+/stock-predictor-frontend/.DS_Store
+/stock-predictor-frontend/.env.local
+/stock-predictor-frontend/.env.development.local
+/stock-predictor-frontend/.env.test.local
+/stock-predictor-frontend/.env.production.local
+/stock-predictor-frontend/npm-debug.log*
+/stock-predictor-frontend/yarn-debug.log*
+/stock-predictor-frontend/yarn-error.log*
+
+# Data and models
+stock_data/
+models/
+*.csv
+*.h5
+*.pkl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
