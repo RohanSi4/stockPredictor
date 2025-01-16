@@ -1,23 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Stock Price Predictor</h1>
       </header>
+      <main className="App-main">
+        <div className="stock-input-section">
+          <input 
+            type="text" 
+            placeholder="Enter stock symbol (e.g., AAPL)"
+          />
+          <button>Predict</button>
+        </div>
+        
+        <div className="stock-display-section">
+          <div className="current-price">
+            <h2>Current Price</h2>
+            <p>$0.00</p>
+          </div>
+          
+          <div className="prediction">
+            <h2>Predicted Price</h2>
+            <p>$0.00</p>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
