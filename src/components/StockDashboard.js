@@ -1,83 +1,70 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Box,
-  Paper,
-  Grid,
-  TextField,
-  Button,
-  Typography,
-  CircularProgress,
-  Alert,
-} from '@mui/material';
-import StockChart from './StockChart';
-import { fetchStockData } from '../services/api';
+import React, { useState } from 'react';
 
 function StockDashboard() {
-  const [symbol, setSymbol] = useState('SPY');
-  const [stockData, setStockData] = useState(null);
+  const [stockSymbol, setStockSymbol] = useState('');
+  const [currentPrice, setCurrentPrice] = useState('0.00');
+  const [predictedPrice, setPredictedPrice] = useState('0.00');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleFetchData = async () => {
+  const handlePredict = async () => {
+    if (!stockSymbol) return;
+
     setLoading(true);
     setError(null);
+
     try {
-      const data = await fetchStockData(symbol);
-      setStockData(data);
-    } catch (err) {
-      setError(err.message);
+      const response = await fetch(`http://localhost:5001/predict/${stockSymbol}`);
+      const data = await response.json();
+      
+      if (data) {
+        setCurrentPrice(data.current_price?.toFixed(2) || '0.00');
+        setPredictedPrice(data.predicted_price?.toFixed(2) || '0.00');
+      }
+    } catch (error) {
+      console.error('Error fetching prediction:', error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    handleFetchData();
-  }, []);
-
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={3}>
-        {/* Search Section */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2 }}>
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <TextField
-                label="Stock Symbol"
-                value={symbol}
-                onChange={(e) => setSymbol(e.target.value.toUpperCase())}
-                sx={{ width: 200 }}
-              />
-              <Button
-                variant="contained"
-                onClick={handleFetchData}
-                disabled={loading}
-              >
-                {loading ? <CircularProgress size={24} /> : 'Fetch Data'}
-              </Button>
-            </Box>
-          </Paper>
-        </Grid>
-
-        {/* Error Display */}
-        {error && (
-          <Grid item xs={12}>
-            <Alert severity="error">{error}</Alert>
-          </Grid>
-        )}
-
-        {/* Chart Section */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2 }}>
-            {stockData ? (
-              <StockChart data={stockData.data} />
-            ) : (
-              <Typography>No data available</Typography>
-            )}
-          </Paper>
-        </Grid>
-      </Grid>
-    </Box>
+    <div className="App-main">
+      <div className="stock-input-section">
+        <input 
+          type="text" 
+          value={stockSymbol}
+          onChange={(e) => setStockSymbol(e.target.value.toUpperCase())}
+          placeholder="Enter stock symbol (e.g., AAPL)"
+          disabled={loading}
+        />
+        <button 
+          onClick={handlePredict}
+          disabled={loading}
+        >
+          {loading ? 'Loading...' : 'Predict'}
+        </button>
+      </div>
+      
+      {error && (
+        <div style={{ color: '#ff6b6b', marginBottom: '20px' }}>
+          Error: {error}
+        </div>
+      )}
+      
+      <div className="stock-display-section">
+        <div className="current-price">
+          <h2>Current Price</h2>
+          <p>${currentPrice}</p>
+        </div>
+        
+        <div className="prediction">
+          <h2>Predicted Price</h2>
+          <p>${predictedPrice}</p>
+        </div>
+      </div>
+    </div>
   );
 }
 

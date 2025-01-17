@@ -1,29 +1,15 @@
 import React from 'react';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Layout from './components/Layout';
+import StockDashboard from './components/StockDashboard';
 import './App.css';
-
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#90caf9',
-    },
-    secondary: {
-      main: '#f48fb1',
-    },
-  },
-});
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router>
-        <Layout />
-      </Router>
-    </ThemeProvider>
+    <div className="App">
+      <header className="App-header">
+        <h1>Stock Price Predictor</h1>
+      </header>
+      <StockDashboard />
+    </div>
   );
 }
 
