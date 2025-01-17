@@ -130,7 +130,11 @@ stock-predictor/
 5. Create a Pull Request
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details
+Copyright (c) 2024 Rohan Singh. All rights reserved.
+
+This project is personal work and is not open for redistribution or reuse without explicit permission. The code is shared publicly for demonstration and educational purposes only.
+
+Note: While the project uses open-source libraries and frameworks, the implementation and business logic are proprietary.
 
 ## Acknowledgments
 - Alpha Vantage for stock data API
